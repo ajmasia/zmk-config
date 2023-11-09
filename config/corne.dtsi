@@ -1,6 +1,0 @@
-/ {
-    chosen {
-        zmk,backlight = &backlight;
-    };
-}:
-
