@@ -1,14 +1,44 @@
 #include <dt-bindings/led/led.h>
 
-&pwm0 {
+&pinctrl {
+    spi3_default: spi3_default {
+        ws2812_group: group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+        };
+    };
+
+    spi3_sleep: spi3_sleep {
+        ws2812_group: group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi3 {
+    compatible = "nordic,nrf-spim";
     status = "okay";
-    ch0-pin = <45>; /* LED 0 */
-    ch1-pin = <46>; /* LED 1 */
-    ch2-pin = <47>; /* LED 2 */
+
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    ws2812_led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        label = "WS2812";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        chain-length = <6>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <LED_COLOR_ID_GREEN
+                            LED_COLOR_ID_RED
+                            LED_COLOR_ID_BLUE>;
+    };
 };
 
 / {
     chosen {
-        zmk,backlight = &backlight;
+        zmk,underglow = &ws2812_led_strip;
     };
-}:
+};
