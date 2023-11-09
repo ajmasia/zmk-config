@@ -9,10 +9,6 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
-        &led_strip {
-            chain-length = <12>;
-        };
-
         keymap {
                 compatible = "zmk,keymap";
 
