@@ -56,25 +56,3 @@
 };
 
 
-/ {
-    backlight: pwmleds {
-        compatible = "pwm-leds";
-        label = "Backlight LEDs";
-        pwm_led_0 {
-            pwms = <&pwm0 45>; /* LED 0 */
-        };
-        pwm_led_1 {
-            pwms = <&pwm0 46>; /* LED 1 */
-        };
-        pwm_led_2 {
-            pwms = <&pwm0 47>; /* LED 2 */
-        };
-    };
-};
-
-/ {
-    chosen {
-        zmk,backlight = &backlight;
-    };
-}:
-
