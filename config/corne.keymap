@@ -56,3 +56,8 @@
 };
 
 
+/ {
+    chosen {
+        zmk,backlight = &backlight;
+    };
+}:
